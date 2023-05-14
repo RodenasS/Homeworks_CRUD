@@ -1,10 +1,14 @@
 package lt.ku.stud.controllers;
+
 import lt.ku.stud.entities.Client;
 import lt.ku.stud.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,14 +18,14 @@ public class ClientsController {
     public ClientRepository clientRepository;
 
     @GetMapping("/")
-    public String clients(Model model){
-        List<Client> clients= clientRepository.findAll();
+    public String clients(Model model) {
+        List<Client> clients = clientRepository.findAll();
         model.addAttribute("clients", clients);
         return "clients_list";
     }
 
     @GetMapping("/new")
-    public String newClient(){
+    public String newClient() {
         return "clients_new";
     }
 
@@ -31,18 +35,18 @@ public class ClientsController {
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone
-    ){
-        Client c=new Client(name, surname, email, phone);
+    ) {
+        Client c = new Client(name, surname, email, phone);
         clientRepository.save(c);
         return "redirect:/";
     }
 
     @GetMapping("/update/{id}")
     public String update(
-        @PathVariable("id") Integer id,
-        Model model
-    ){
-        Client c=clientRepository.getReferenceById(id);
+            @PathVariable("id") Integer id,
+            Model model
+    ) {
+        Client c = clientRepository.getReferenceById(id);
         model.addAttribute("client", c);
         return "clients_update";
     }
@@ -54,8 +58,8 @@ public class ClientsController {
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone
-    ){
-        Client c=clientRepository.getReferenceById(id);
+    ) {
+        Client c = clientRepository.getReferenceById(id);
         c.setName(name);
         c.setSurname(surname);
         c.setEmail(email);
@@ -66,9 +70,9 @@ public class ClientsController {
     }
 
     @GetMapping("/delete/{id}")
-    public  String delete(
+    public String delete(
             @PathVariable("id") Integer id
-    ){
+    ) {
         clientRepository.deleteById(id);
         return "redirect:/";
     }

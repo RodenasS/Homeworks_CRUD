@@ -3,17 +3,16 @@ package lt.ku.stud.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="clients_groups")
+@Table(name = "clients_groups")
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Column
     private String name;
-
+    @Column
     private String surname;
-
+    @Column
     private String email;
     @Column
     private String phone;
